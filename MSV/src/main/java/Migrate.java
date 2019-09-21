@@ -1,30 +1,41 @@
+import migrate.FileReader;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo( name = "migrate")
-public class Migrate extends AbstractMojo{
+import java.io.File;
 
-    @Parameter(required =  true)
+import static util.Logger.log;
+
+@Mojo(name = "migrate")
+public class Migrate extends AbstractMojo {
+
+    @Parameter(required = true)
     private String dbName;
 
-    @Parameter(required =  true)
+    @Parameter(required = true)
     private String dbPw;
 
     @Parameter(required = true)
     private String dbAddress;
 
-    @Parameter(defaultValue = "${project.build.directory}")
+    @Parameter(defaultValue = "${basedir}") //File.separator
     private String projectBuildDir;
 
 
+    private final FileReader fileReader;
 
-    public void execute() throws MojoExecutionException
-    {
+    public Migrate() {
+        fileReader = new FileReader();
+    }
 
-        getLog().info("Project build dir: " + projectBuildDir);
-        getLog().info( "Hello, world." );
+
+    public void execute() throws MojoExecutionException {
+
+        log().info("Project build dir: " + projectBuildDir);
+        log().info("Hello, world.");
+        fileReader.getFileList(projectBuildDir + File.separator + "src" + File.separator + "main" + File.separator + "resources");
         throw new MojoExecutionException("Something went wrong");
     }
 

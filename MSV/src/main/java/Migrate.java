@@ -1,3 +1,4 @@
+import exception.MSVException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -28,10 +29,13 @@ public class Migrate extends AbstractMojo {
 
 
     public void execute() throws MojoExecutionException {
-        fileReader = new FileReader(projectBuildDir + File.separator + "src" + File.separator + "main" + File.separator + "resources");
-        log().info("Project build dir: " + projectBuildDir);
-        log().info("Hello, world.");
-        throw new MojoExecutionException("Something went wrong");
+        try {
+            fileReader = new FileReader(projectBuildDir + File.separator + "src" + File.separator + "main" + File.separator + "resources");
+            log().info("Project build dir: " + projectBuildDir);
+            log().info("Hello, world.");
+        } catch (MSVException e) {
+            throw new MojoExecutionException(e.getMessage(), e.getCause());
+        }
     }
 
 }

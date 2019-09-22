@@ -1,6 +1,7 @@
 package reader;
 
 
+import exception.MSVException;
 import lombok.Data;
 import reader.dto.FileJsDto;
 import reader.dto.FileJsonDto;
@@ -19,6 +20,7 @@ import static java.util.stream.Collectors.toList;
 import static util.Constans.JSONTYPE;
 import static util.Constans.JSTYPE;
 import static util.Logger.log;
+import static validator.ValidatorFiles.fileJsonValidator;
 
 @Data
 public class FileReader {
@@ -29,7 +31,7 @@ public class FileReader {
 
     public FileReader(String path) {
         fileNames = getFileList(path);
-        initFileList(path);
+        initFileLists(path);
     }
 
     private List<String> getFileList(String path) {
@@ -44,12 +46,13 @@ public class FileReader {
         }
     }
 
-    private void initFileList(String path) {
+    private void initFileLists(String path) {
+        fileJsDtoList = new ArrayList<>();
+        fileJsonDtoList = new ArrayList<>();
         fileNames.forEach(x -> {
             if (x.contains(JSONTYPE)) {
                 String[] fileValues = x.replace(JSONTYPE, "").split("_");
-                fileJsonDtoList.add(FileJsonDto.builder().value(readLineByLine(path + File.separator + x))
-                        .version(fileValues[0]).fileName(x).name(fileValues[1]).collectionName(fileValues[2]).build());
+                fileJsonDtoList.add(fileJsonValidator(fileValues, x, readLineByLine(path + File.separator + x)));
             } else if (x.contains(JSTYPE)) {
                 String[] fileValues = x.replace(JSTYPE, "").split("_");
                 fileJsDtoList.add(FileJsDto.builder().value(readLineByLine(path + File.separator + x))
@@ -58,7 +61,6 @@ public class FileReader {
                 log().warn("Not used files: " + x);
             }
         });
-
     }
 
     private static String readLineByLine(String filePath) {
@@ -67,7 +69,7 @@ public class FileReader {
         try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new MSVException("Cannot read file. (Path: " + filePath + ")", e);
         }
 
         return contentBuilder.toString();

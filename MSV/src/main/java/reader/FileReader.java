@@ -20,6 +20,7 @@ import static java.util.stream.Collectors.toList;
 import static util.Constans.JSONTYPE;
 import static util.Constans.JSTYPE;
 import static util.Logger.log;
+import static validator.ValidatorFiles.fileJsValidator;
 import static validator.ValidatorFiles.fileJsonValidator;
 
 @Data
@@ -55,8 +56,7 @@ public class FileReader {
                 fileJsonDtoList.add(fileJsonValidator(fileValues, x, readLineByLine(path + File.separator + x)));
             } else if (x.contains(JSTYPE)) {
                 String[] fileValues = x.replace(JSTYPE, "").split("_");
-                fileJsDtoList.add(FileJsDto.builder().value(readLineByLine(path + File.separator + x))
-                        .version(fileValues[0]).fileName(x).name(fileValues[1]).build());
+                fileJsDtoList.add(fileJsValidator(fileValues, x, readLineByLine(path + File.separator + x)));
             } else {
                 log().warn("Not used files: " + x);
             }

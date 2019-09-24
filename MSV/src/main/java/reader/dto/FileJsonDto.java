@@ -12,8 +12,8 @@ public class FileJsonDto extends FileBaseDto {
 
 
     @Builder
-    public FileJsonDto(String fileName, String name, String version, String value, String collectionName) {
-        super(fileName, name, version, value);
+    public FileJsonDto(String fileName, String name, String version, String collectionName) {
+        super(fileName, name, version);
         this.collectionName = collectionName;
     }
 }

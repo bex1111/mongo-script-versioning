@@ -30,9 +30,10 @@
                 <artifactId>msv-maven-plugin</artifactId>
                 <version>0.1</version>
                 <configuration>
-                    <dbName>test</dbName>
-                    <dbAddress>test</dbAddress>
-                    <dbPw>test</dbPw>
+                    <dbName>MSVtest</dbName>
+                    <dbAddress>localhost</dbAddress>
+                    <dbPort>27017</dbPort>
+                    <fileLocation>./src/main/resources/msv</fileLocation>
                 </configuration>
             </plugin>
         </plugins>

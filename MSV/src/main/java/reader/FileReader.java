@@ -26,17 +26,21 @@ import static validator.ValidatorFiles.fileJsonValidator;
 @Data
 public class FileReader {
 
-    List<String> fileNames;
-    List<FileJsDto> fileJsDtoList;
-    List<FileJsonDto> fileJsonDtoList;
+    private List<String> fileNames;
+    private List<FileJsDto> fileJsDtoList;
+    private List<FileJsonDto> fileJsonDtoList;
+    private String fileLocation;
 
-    public FileReader(String path) {
-        fileNames = getFileList(path);
-        initFileLists(path);
+
+    public FileReader(String fileLocation) {
+        this.fileLocation = fileLocation;
+        fileNames = getFileList();
+        initFileLists();
     }
 
-    private List<String> getFileList(String path) {
-        try (Stream<Path> paths = Files.walk(Paths.get(path))) {
+
+    private List<String> getFileList() {
+        try (Stream<Path> paths = Files.walk(Paths.get(fileLocation))) {
             return paths
                     .filter(Files::isRegularFile)
                     .map(x -> x.getFileName().toString())
@@ -47,16 +51,16 @@ public class FileReader {
         }
     }
 
-    private void initFileLists(String path) {
+    private void initFileLists() {
         fileJsDtoList = new ArrayList<>();
         fileJsonDtoList = new ArrayList<>();
         fileNames.forEach(x -> {
             if (x.contains(JSONTYPE)) {
                 String[] fileValues = x.replace(JSONTYPE, "").split("_");
-                fileJsonDtoList.add(fileJsonValidator(fileValues, x, readLineByLine(path + File.separator + x)));
+                fileJsonDtoList.add(fileJsonValidator(fileValues, x, readLineByLine(fileLocation + File.separator + x)));
             } else if (x.contains(JSTYPE)) {
                 String[] fileValues = x.replace(JSTYPE, "").split("_");
-                fileJsDtoList.add(fileJsValidator(fileValues, x, readLineByLine(path + File.separator + x)));
+                fileJsDtoList.add(fileJsValidator(fileValues, x, readLineByLine(fileLocation + File.separator + x)));
             } else {
                 log().warn("Not used files: " + x);
             }

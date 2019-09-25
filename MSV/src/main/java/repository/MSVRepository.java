@@ -3,11 +3,14 @@ package repository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
 import reader.dto.FileBaseDto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import static util.Constans.*;
 import static util.FileLoader.readLineByLine;
 import static util.Hash.generateSha512;
 
@@ -18,30 +21,21 @@ public class MSVRepository {
     private String fileLocation;
     private static final String MSVCOLLECTIONNAME = "msv_migrate";
 
-    public void selectAllRecordsFromACollection() {
+    public List<DBObject> findAll() {
         DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find();
-        while (cursor.hasNext()) {
-            System.out.println(cursor.next());
-        }
+        return cursor.toArray();
     }
 
     public void insertNewFile(FileBaseDto fileBaseDto) {
         BasicDBObject newFile = new BasicDBObject();
-        newFile.put("version", fileBaseDto.getVersion());
-        newFile.put("description", fileBaseDto.getVersion());
-        newFile.put("full_name", fileBaseDto.getFileName());
-        newFile.put("checksum", generateSha512(readLineByLine(fileLocation, fileBaseDto.getFileName())));
-        newFile.put("installed_by", System.getProperty("user.name"));
-        newFile.put("date", LocalDateTime.now());
+        newFile.put(VERSION, fileBaseDto.getVersion());
+        newFile.put(DESCRIPTION, fileBaseDto.getDescription());
+        newFile.put(FULLNAME, fileBaseDto.getFileName());
+        newFile.put(CHECKSUM, generateSha512(readLineByLine(fileLocation, fileBaseDto.getFileName())));
+        newFile.put(INSTALLEDBY, System.getProperty("user.description"));
+        newFile.put(DATE, LocalDateTime.now().toString());
         db.getCollection(MSVCOLLECTIONNAME).insert(newFile);
     }
-//    version	A fájl névben található verzió
-//    description	A fájl névben található rövid név
-//    type	Típus (js vagy json)
-//    full_name	A fájl teljes neve
-//    checksum	Az állományból készült kivonat
-//    installed_by	A telepítő neve
-//    date	A befuttatás dátuma
-//    status	A befuttatás státusza (peding, success, fail)
+
 
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 public class FileBaseDto {
 
     private String fileName;
-    private String name;
+    private String description;
     private String version;
 
 }

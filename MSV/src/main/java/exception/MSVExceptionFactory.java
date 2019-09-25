@@ -3,11 +3,11 @@ package exception;
 public class MSVExceptionFactory {
 
     public static MSVException wrongJsonFileNameFormat() {
-        return new MSVException("Wrong file name format! (Example: 0001_name_collectionName.json)");
+        return new MSVException("Wrong file description format! (Example: 0001_name_collectionName.json)");
     }
 
     public static MSVException wrongJsFileNameFormat() {
-        return new MSVException("Wrong file name format! (Example: 0001_name.js)");
+        return new MSVException("Wrong file description format! (Example: 0001_name.js)");
     }
 
     public static MSVException wrongVersionFormat() {

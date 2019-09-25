@@ -4,8 +4,8 @@ import com.mongodb.DB;
 import reader.dto.FileBaseDto;
 import reader.dto.FileJsDto;
 import reader.dto.FileJsonDto;
+import repository.MSVRepository;
 
-import java.io.File;
 import java.util.List;
 
 import static util.FileLoader.readLineByLine;
@@ -16,11 +16,14 @@ public class MigrateHandler {
     private DB db;
     private JsImporter jsImporter;
     private JsonImporter jsonImporter;
+    private MSVRepository msvRepository;
 
-    public MigrateHandler(String fileLocation, DB db, List<FileBaseDto> fileBaseDtoList) {
+
+    public MigrateHandler(String fileLocation, DB db, List<FileBaseDto> fileBaseDtoList, MSVRepository msvRepository) {
         this.fileLocation = fileLocation;
         this.db = db;
         this.jsonImporter = new JsonImporter(db);
+        this.msvRepository = msvRepository;
         this.jsImporter = new JsImporter(db);
         startMigrate(fileBaseDtoList);
     }
@@ -28,10 +31,11 @@ public class MigrateHandler {
     private void startMigrate(List<FileBaseDto> fileBaseDtoList) {
         fileBaseDtoList.forEach(item -> {
             if (item instanceof FileJsDto) {
-                jsImporter.executeJsCommand(readLineByLine(fileLocation + File.separator + item.getFileName()));
+                jsImporter.executeJsCommand(item.getFileName(), readLineByLine(fileLocation, item.getFileName()));
             } else {
-                jsonImporter.importJson(readLineByLine(fileLocation + File.separator + item.getFileName()), ((FileJsonDto) item).getCollectionName());
+                jsonImporter.importJson(item.getFileName(), readLineByLine(fileLocation, item.getFileName()), ((FileJsonDto) item).getCollectionName());
             }
+            msvRepository.insertNewFile(item);
         });
     }
 

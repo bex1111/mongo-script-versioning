@@ -27,6 +27,10 @@ public class MSVExceptionFactory {
         return new MSVException("Cannot insert json. Filename: " + fileName);
     }
 
+    public static MSVException notUniqVersion() {
+        return new MSVException("Not uniq file version");
+    }
+
     public static MSVException mongoAuthProblem() {
         return new MSVException("Cannot authenticate to MongoDB");
     }

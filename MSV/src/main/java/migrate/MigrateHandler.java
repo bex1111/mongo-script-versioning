@@ -1,10 +1,10 @@
 package migrate;
 
 import com.mongodb.DB;
-import reader.dto.FileBaseDto;
-import reader.dto.FileJsDto;
-import reader.dto.FileJsonDto;
 import repository.MSVRepository;
+import validator.dto.FileBaseDto;
+import validator.dto.FileJsDto;
+import validator.dto.FileJsonDto;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import static util.FileLoader.readLineByLine;
 public class MigrateHandler {
 
     private String fileLocation;
-    private DB db;
+
     private JsImporter jsImporter;
     private JsonImporter jsonImporter;
     private MSVRepository msvRepository;
@@ -21,7 +21,6 @@ public class MigrateHandler {
 
     public MigrateHandler(String fileLocation, DB db, List<FileBaseDto> fileBaseDtoList, MSVRepository msvRepository) {
         this.fileLocation = fileLocation;
-        this.db = db;
         this.jsonImporter = new JsonImporter(db);
         this.msvRepository = msvRepository;
         this.jsImporter = new JsImporter(db);

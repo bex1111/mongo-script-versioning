@@ -1,7 +1,8 @@
-package reader;
+package validator;
 
 import lombok.Data;
-import reader.dto.FileBaseDto;
+import repository.MSVRepository;
+import validator.dto.FileBaseDto;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,8 +14,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static reader.ValidatorFiles.fileJsValidator;
-import static reader.ValidatorFiles.fileJsonValidator;
 import static util.Constans.JSONTYPE;
 import static util.Constans.JSTYPE;
 import static util.Logger.log;
@@ -24,14 +23,20 @@ public class FileReader {
 
     private List<String> fileNames;
     private List<FileBaseDto> fileBaseDtos;
+    private List<FileBaseDto> newFileBaseDtos;
+    private MSVRepository msvRepository;
+    private ValidatorFiles validatorFiles;
 
     private String fileLocation;
+    private String[] fileValues;
 
 
-    public FileReader(String fileLocation) {
+    public FileReader(String fileLocation, MSVRepository msvRepository) {
         this.fileLocation = fileLocation;
+        validatorFiles = new ValidatorFiles();
         fileNames = getFileList();
         initFileLists();
+        validatorFiles.listUniq(fileBaseDtos.stream().map(x -> x.getVersion()).collect(toList()));
         fileBaseDtos.sort(Comparator.comparing(FileBaseDto::getVersion));
     }
 
@@ -53,14 +58,17 @@ public class FileReader {
         fileNames.forEach(x -> {
             if (x.contains(JSONTYPE)) {
                 String[] fileValues = x.replace(JSONTYPE, "").split("_");
-                fileBaseDtos.add(fileJsonValidator(fileValues, x));
+                fileBaseDtos.add(validatorFiles.fileJsonValidator(fileValues, x));
             } else if (x.contains(JSTYPE)) {
                 String[] fileValues = x.replace(JSTYPE, "").split("_");
-                fileBaseDtos.add(fileJsValidator(fileValues, x));
+                fileBaseDtos.add(validatorFiles.fileJsValidator(fileValues, x));
             } else {
                 log().warn("Not used files: " + x);
             }
         });
     }
+
+    
+
 
 }

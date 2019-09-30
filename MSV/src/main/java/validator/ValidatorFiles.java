@@ -1,14 +1,17 @@
-package reader;
+package validator;
 
+import com.mongodb.DBObject;
 import exception.MSVExceptionFactory;
-import lombok.experimental.UtilityClass;
-import reader.dto.FileJsDto;
-import reader.dto.FileJsonDto;
+import validator.dto.FileJsDto;
+import validator.dto.FileJsonDto;
 
-@UtilityClass
+import java.util.HashSet;
+import java.util.List;
+
+
 public class ValidatorFiles {
 
-    public static FileJsonDto fileJsonValidator(String[] fileValues, String name) {
+    public FileJsonDto fileJsonValidator(String[] fileValues, String name) {
         if (fileValues.length != 3 || fileValues[1].isBlank()) {
             throw MSVExceptionFactory.wrongJsonFileNameFormat();
         }
@@ -17,7 +20,7 @@ public class ValidatorFiles {
                 .version(fileValues[0]).fileName(name).name(fileValues[1]).collectionName(fileValues[2]).build();
     }
 
-    public static FileJsDto fileJsValidator(String[] fileValues, String name) {
+    public FileJsDto fileJsValidator(String[] fileValues, String name) {
         if (fileValues.length != 2 || fileValues[1].isBlank()) {
             throw MSVExceptionFactory.wrongJsFileNameFormat();
         }
@@ -25,5 +28,14 @@ public class ValidatorFiles {
                 .version(fileValues[0]).fileName(name).name(fileValues[1]).build();
     }
 
+    public void listUniq(List<String> fileVersion) {
+        if (new HashSet<String>(fileVersion).size() != fileVersion.size()) {
+            throw MSVExceptionFactory.notUniqVersion();
+        }
+    }
 
+    public void textNotChange(DBObject dbObject,String text)
+    {
+
+    }
 }

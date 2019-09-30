@@ -1,4 +1,4 @@
-package reader.dto;
+package validator.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

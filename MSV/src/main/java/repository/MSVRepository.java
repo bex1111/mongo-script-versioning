@@ -5,7 +5,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
-import reader.dto.FileBaseDto;
+import validator.dto.FileBaseDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,13 +26,20 @@ public class MSVRepository {
         return cursor.toArray();
     }
 
+    public DBObject findVersion(String version) {
+        BasicDBObject whereQuery = new BasicDBObject();
+        whereQuery.put(VERSION, version);
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find(whereQuery);
+        return cursor.curr();
+    }
+
     public void insertNewFile(FileBaseDto fileBaseDto) {
         BasicDBObject newFile = new BasicDBObject();
         newFile.put(VERSION, fileBaseDto.getVersion());
         newFile.put(DESCRIPTION, fileBaseDto.getDescription());
         newFile.put(FULLNAME, fileBaseDto.getFileName());
         newFile.put(CHECKSUM, generateSha512(readLineByLine(fileLocation, fileBaseDto.getFileName())));
-        newFile.put(INSTALLEDBY, System.getProperty("user.description"));
+        newFile.put(INSTALLEDBY, System.getProperty("user.name"));
         newFile.put(DATE, LocalDateTime.now().toString());
         db.getCollection(MSVCOLLECTIONNAME).insert(newFile);
     }

@@ -7,8 +7,8 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import reader.FileReader;
 import repository.MSVRepository;
+import validator.FileReader;
 
 import java.net.UnknownHostException;
 
@@ -44,8 +44,7 @@ public class Migrate extends AbstractMojo {
         try {
             initDB();
             msvRepository = new MSVRepository(db, fileLocation);
-            fileReader = new FileReader(fileLocation);
-
+            fileReader = new FileReader(fileLocation, msvRepository);
             new MigrateHandler(fileLocation, db, fileReader.getFileBaseDtos(), msvRepository);
             msvRepository.findAll();
         } catch (MSVException e) {

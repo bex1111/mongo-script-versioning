@@ -33,7 +33,7 @@ public class FileReader {
 
     public FileReader(String fileLocation, MSVRepository msvRepository) {
         this.fileLocation = fileLocation;
-        validatorFiles = new ValidatorFiles();
+        validatorFiles = new ValidatorFiles(msvRepository);
         fileNames = getFileList();
         initFileLists();
         validatorFiles.listUniq(fileBaseDtos.stream().map(x -> x.getVersion()).collect(toList()));
@@ -67,8 +67,6 @@ public class FileReader {
             }
         });
     }
-
-    
 
 
 }

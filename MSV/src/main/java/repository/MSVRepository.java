@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import validator.dto.FileBaseDto;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static util.Constans.*;
 import static util.FileLoader.readLineByLine;
@@ -26,12 +28,16 @@ public class MSVRepository {
         return cursor.toArray();
     }
 
-    public DBObject findVersion(String version) {
+    public Optional<String> findCheckSum(String fileName) {
         BasicDBObject whereQuery = new BasicDBObject();
-        whereQuery.put(VERSION, version);
+        whereQuery.put(FULLNAME, fileName);
         DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find(whereQuery);
-        return cursor.curr();
+        return Optional.ofNullable(cursor.curr().get(CHECKSUM).toString());
     }
+
+//    public Optional<String> getMaxVersion() {
+//       //TODO native query
+//    }
 
     public void insertNewFile(FileBaseDto fileBaseDto) {
         BasicDBObject newFile = new BasicDBObject();

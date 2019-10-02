@@ -1,15 +1,22 @@
 package validator;
 
-import com.mongodb.DBObject;
 import exception.MSVExceptionFactory;
+import lombok.RequiredArgsConstructor;
+import repository.MSVRepository;
 import validator.dto.FileJsDto;
 import validator.dto.FileJsonDto;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+
+import static util.FileLoader.readLineByLine;
 
 
+@RequiredArgsConstructor
 public class ValidatorFiles {
+
+    private final MSVRepository msvRepository;
 
     public FileJsonDto fileJsonValidator(String[] fileValues, String name) {
         if (fileValues.length != 3 || fileValues[1].isBlank()) {
@@ -34,8 +41,10 @@ public class ValidatorFiles {
         }
     }
 
-    public void textNotChange(DBObject dbObject,String text)
-    {
+
+    private void validateFileText(String fileLocation, String fileName) {
+        Optional<String> checkSum = msvRepository.findCheckSum(fileName);
+        String value = readLineByLine(fileLocation, fileName);
 
     }
 }

@@ -3,6 +3,7 @@ package validator;
 import exception.MSVExceptionFactory;
 import lombok.RequiredArgsConstructor;
 import repository.MSVRepository;
+import util.Hash;
 import validator.dto.FileJsDto;
 import validator.dto.FileJsonDto;
 
@@ -42,9 +43,11 @@ public class ValidatorFiles {
     }
 
 
-    private void validateFileText(String fileLocation, String fileName) {
+    public void validateFileText(String fileLocation, String fileName) {
         Optional<String> checkSum = msvRepository.findCheckSum(fileName);
-        String value = readLineByLine(fileLocation, fileName);
+        if (checkSum.isPresent() && !Hash.generateSha512(readLineByLine(fileLocation, fileName)).equals(checkSum.get())) {
+            throw MSVExceptionFactory.hashNotEqual(fileName);
+        }
 
     }
 }

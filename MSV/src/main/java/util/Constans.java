@@ -15,5 +15,6 @@ public class Constans {
     public final static String CHECKSUM = "checksum";
     public final static String INSTALLEDBY = "installed_by";
     public final static String DATE = "date";
+    public final static String COLLECTIONNAME = "collection_name";
 
 }

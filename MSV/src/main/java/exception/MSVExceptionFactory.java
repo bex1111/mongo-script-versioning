@@ -31,6 +31,10 @@ public class MSVExceptionFactory {
         return new MSVException("Not uniq file version");
     }
 
+    public static MSVException hashNotEqual(String fileName) {
+        return new MSVException("You change file which had already imported! (" + fileName + ")");
+    }
+
     public static MSVException mongoAuthProblem() {
         return new MSVException("Cannot authenticate to MongoDB");
     }

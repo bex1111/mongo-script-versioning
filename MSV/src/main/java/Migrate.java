@@ -45,10 +45,11 @@ public class Migrate extends AbstractMojo {
             initDB();
             msvRepository = new MSVRepository(db, fileLocation);
             fileReader = new FileReader(fileLocation, msvRepository);
-            new MigrateHandler(fileLocation, db, fileReader.getFileBaseDtos(), msvRepository);
-            msvRepository.findAll();
+            new MigrateHandler(fileLocation, db, fileReader.getNewFileBaseDtos(), msvRepository);
         } catch (MSVException e) {
             throw new MojoExecutionException(e.getMessage(), e.getCause());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

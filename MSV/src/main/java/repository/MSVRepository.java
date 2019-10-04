@@ -6,9 +6,9 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
 import validator.dto.FileBaseDto;
+import validator.dto.FileJsonDto;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +32,13 @@ public class MSVRepository {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.put(FULLNAME, fileName);
         DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find(whereQuery);
-        return Optional.ofNullable(cursor.curr().get(CHECKSUM).toString());
+        return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get(CHECKSUM).toString());
     }
 
-//    public Optional<String> getMaxVersion() {
-//       //TODO native query
-//    }
+    public Optional<String> getMaxVersion() {
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject("version", -1)).limit(1);
+        return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get("version").toString());
+    }
 
     public void insertNewFile(FileBaseDto fileBaseDto) {
         BasicDBObject newFile = new BasicDBObject();
@@ -47,6 +48,9 @@ public class MSVRepository {
         newFile.put(CHECKSUM, generateSha512(readLineByLine(fileLocation, fileBaseDto.getFileName())));
         newFile.put(INSTALLEDBY, System.getProperty("user.name"));
         newFile.put(DATE, LocalDateTime.now().toString());
+        if (fileBaseDto instanceof FileJsonDto) {
+            newFile.put(COLLECTIONNAME, ((FileJsonDto) fileBaseDto).getCollectionName());
+        }
         db.getCollection(MSVCOLLECTIONNAME).insert(newFile);
     }
 

@@ -13,14 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 import static util.Constans.*;
-import static util.FileLoader.readLineByLine;
+import static util.FileHandler.readLineByLine;
 import static util.Hash.generateSha512;
 
 @AllArgsConstructor
 public class MSVRepository {
 
     private DB db;
-    private String fileLocation;
     private static final String MSVCOLLECTIONNAME = "msv_migrate";
 
     public List<DBObject> findAll() {
@@ -40,7 +39,7 @@ public class MSVRepository {
         return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get("version").toString());
     }
 
-    public void insertNewFile(FileBaseDto fileBaseDto) {
+    public void insertNewFile(FileBaseDto fileBaseDto, String fileLocation) {
         BasicDBObject newFile = new BasicDBObject();
         newFile.put(VERSION, fileBaseDto.getVersion());
         newFile.put(DESCRIPTION, fileBaseDto.getDescription());

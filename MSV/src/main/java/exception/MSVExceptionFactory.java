@@ -1,5 +1,7 @@
 package exception;
 
+import java.io.IOException;
+
 public class MSVExceptionFactory {
 
     public static MSVException wrongJsonFileNameFormat() {
@@ -33,6 +35,14 @@ public class MSVExceptionFactory {
 
     public static MSVException hashNotEqual(String fileName) {
         return new MSVException("You change file which had already imported! (" + fileName + ")");
+    }
+
+    public static MSVException cannotReadFile(String filePath, IOException e) {
+        return new MSVException("Cannot read file. (Path: " + filePath + ")", e);
+    }
+
+    public static MSVException cannotWriteFile(String filePath, IOException e) {
+        return new MSVException("Cannot write file. (Path: " + filePath + ")", e);
     }
 
     public static MSVException mongoAuthProblem() {

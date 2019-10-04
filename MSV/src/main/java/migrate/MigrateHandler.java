@@ -8,7 +8,7 @@ import validator.dto.FileJsonDto;
 
 import java.util.List;
 
-import static util.FileLoader.readLineByLine;
+import static util.FileHandler.readLineByLine;
 
 public class MigrateHandler {
 
@@ -34,7 +34,7 @@ public class MigrateHandler {
             } else {
                 jsonImporter.importJson(item.getFileName(), readLineByLine(fileLocation, item.getFileName()), ((FileJsonDto) item).getCollectionName());
             }
-            msvRepository.insertNewFile(item);
+            msvRepository.insertNewFile(item, fileLocation);
         });
     }
 

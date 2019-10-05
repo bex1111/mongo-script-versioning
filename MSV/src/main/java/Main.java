@@ -4,11 +4,13 @@ import exception.MSVExceptionFactory;
 import filewriter.CsvGenerator;
 import migrate.MigrateHandler;
 import repository.MSVRepository;
+import revereter.RevertHandler;
 import validator.FileReader;
 
 import java.net.UnknownHostException;
 
 import static java.util.Objects.isNull;
+import static util.Logger.log;
 
 public class Main {
 
@@ -19,16 +21,21 @@ public class Main {
 
     public Main(String dbName, String dbAddress, int dbPort, String dbPassword, String dbUsername) {
         initDB(dbName, dbAddress, dbPort, dbPassword, dbUsername);
+        logLogo();
     }
 
     public void executeMigrate(String fileLocation) {
         fileReader = new FileReader(fileLocation, msvRepository);
         new MigrateHandler(fileLocation, db, fileReader.getNewFileBaseDtos(), msvRepository);
+    }
+
+    public void executeReverter(String revertVersion) {
+        new RevertHandler(msvRepository, revertVersion);
 
     }
 
     public void executeValidation(String fileLocation) {
-        fileReader = new FileReader(fileLocation, msvRepository);
+        new FileReader(fileLocation, msvRepository);
     }
 
     public void executeToCsv(String outputLocation) {
@@ -48,5 +55,16 @@ public class Main {
         msvRepository = new MSVRepository(db);
     }
 
+    private void logLogo() {
+        log().info("");
+        log().info(".##.....##..######..##.....##.");
+        log().info(".###...###.##....##.##.....##.");
+        log().info(".####.####.##.......##.....##.");
+        log().info(".##.###.##..######..##.....##.");
+        log().info(".##.....##.......##..##...##..");
+        log().info(".##.....##.##....##...##.##...");
+        log().info(".##.....##..######.....###....");
+        log().info("");
+    }
 
 }

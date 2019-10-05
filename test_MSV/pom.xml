@@ -35,6 +35,7 @@
                     <dbPort>27017</dbPort>
                     <fileLocation>./src/main/resources/msv</fileLocation>
                     <outputLocation>E:\MyProject\szakdolgozat\tocsv</outputLocation>
+                    <revertVersion>${revertVersion}</revertVersion>
                 </configuration>
             </plugin>
         </plugins>

@@ -27,11 +27,25 @@ public class MSVRepository {
         return cursor.toArray();
     }
 
+    public List<DBObject> findAllSortWithVersion() {
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject("version", -1));
+        return cursor.toArray();
+    }
+
     public Optional<String> findCheckSum(String fileName) {
         BasicDBObject whereQuery = new BasicDBObject();
         whereQuery.put(FULLNAME, fileName);
         DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find(whereQuery);
         return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get(CHECKSUM).toString());
+    }
+
+    public void remove(DBObject dbObject) {
+        db.getCollection(MSVCOLLECTIONNAME).remove(dbObject);
+    }
+
+    public boolean versionExist(String version) {
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find(new BasicDBObject("version", version));
+        return cursor.hasNext();
     }
 
     public Optional<String> getMaxVersion() {

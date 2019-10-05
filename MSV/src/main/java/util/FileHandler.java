@@ -10,7 +10,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
+import static util.Logger.log;
 
 @UtilityClass
 public class FileHandler {
@@ -32,6 +37,18 @@ public class FileHandler {
             writer.write(text);
         } catch (IOException e) {
             throw MSVExceptionFactory.cannotWriteFile(stringPath, e);
+        }
+    }
+
+    public static List<String> getFileList(String fileLocation) {
+        try (Stream<Path> paths = Files.walk(Paths.get(fileLocation))) {
+            return paths
+                    .filter(Files::isRegularFile)
+                    .map(x -> x.getFileName().toString())
+                    .collect(toList());
+        } catch (IOException e) {
+            log().info(e.getMessage());
+            return new ArrayList<>();
         }
     }
 }

@@ -4,19 +4,15 @@ import lombok.Data;
 import repository.MSVRepository;
 import validator.dto.FileBaseDto;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static util.Constans.JSONTYPE;
 import static util.Constans.JSTYPE;
+import static util.FileHandler.getFileList;
 import static util.Logger.log;
 
 @Data
@@ -36,7 +32,7 @@ public class FileReader {
         this.fileLocation = fileLocation;
         this.msvRepository = msvRepository;
         validatorFiles = new ValidatorFiles(msvRepository);
-        fileNames = getFileList();
+        fileNames = getFileList(fileLocation);
         initFileLists();
         validatorFiles.listUniq(fileBaseDtos.stream().map(x -> x.getVersion()).collect(toList()));
         fileBaseDtos.sort(Comparator.comparing(FileBaseDto::getVersion));
@@ -52,19 +48,6 @@ public class FileReader {
             newFileBaseDtos.addAll(fileBaseDtos);
         }
 
-    }
-
-
-    private List<String> getFileList() {
-        try (Stream<Path> paths = Files.walk(Paths.get(fileLocation))) {
-            return paths
-                    .filter(Files::isRegularFile)
-                    .map(x -> x.getFileName().toString())
-                    .collect(toList());
-        } catch (IOException e) {
-            log().info(e.getMessage());
-            return new ArrayList<>();
-        }
     }
 
     private void initFileLists() {

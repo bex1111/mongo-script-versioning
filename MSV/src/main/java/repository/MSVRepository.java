@@ -5,16 +5,12 @@ import com.mongodb.DB;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
-import validator.dto.FileBaseDto;
-import validator.dto.FileJsonDto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static util.Constans.*;
-import static util.FileHandler.readLineByLine;
-import static util.Hash.generateSha512;
+import static util.Constans.CHECKSUM;
+import static util.Constans.FULLNAME;
 
 @AllArgsConstructor
 public class MSVRepository {
@@ -28,7 +24,7 @@ public class MSVRepository {
     }
 
     public List<DBObject> findAllSortWithVersion() {
-        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject("version", -1));
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject("version", 1));
         return cursor.toArray();
     }
 
@@ -53,18 +49,8 @@ public class MSVRepository {
         return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get("version").toString());
     }
 
-    public void insertNewFile(FileBaseDto fileBaseDto, String fileLocation) {
-        BasicDBObject newFile = new BasicDBObject();
-        newFile.put(VERSION, fileBaseDto.getVersion());
-        newFile.put(DESCRIPTION, fileBaseDto.getDescription());
-        newFile.put(FULLNAME, fileBaseDto.getFileName());
-        newFile.put(CHECKSUM, generateSha512(readLineByLine(fileLocation, fileBaseDto.getFileName())));
-        newFile.put(INSTALLEDBY, System.getProperty("user.name"));
-        newFile.put(DATE, LocalDateTime.now().toString());
-        if (fileBaseDto instanceof FileJsonDto) {
-            newFile.put(COLLECTIONNAME, ((FileJsonDto) fileBaseDto).getCollectionName());
-        }
-        db.getCollection(MSVCOLLECTIONNAME).insert(newFile);
+    public void insertNewFile(BasicDBObject basicDBObject) {
+        db.getCollection(MSVCOLLECTIONNAME).insert(basicDBObject);
     }
 
 

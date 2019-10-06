@@ -2,6 +2,7 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import exception.MSVExceptionFactory;
 import filewriter.CsvGenerator;
+import listing.ListHandler;
 import migrate.MigrateHandler;
 import repository.MSVRepository;
 import revereter.RevertHandler;
@@ -40,6 +41,10 @@ public class Main {
 
     public void executeToCsv(String outputLocation) {
         new CsvGenerator(msvRepository, outputLocation);
+    }
+
+    public void executeListing() {
+        new ListHandler(msvRepository);
     }
 
     private void initDB(String dbName, String dbAddress, int dbPort, String dbPassword, String dbUsername) {

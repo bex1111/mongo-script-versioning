@@ -29,11 +29,9 @@ public class CsvGenerator {
         startGenerating();
     }
 
-    //TODO rendezzés verzió szerint
-
     private void startGenerating() {
         String finalString = "";
-        List<String> headerOrder = Arrays.asList(FULLNAME, DESCRIPTION, VERSION, INSTALLEDBY, DATE, CHECKSUM, COLLECTIONNAME);
+        List<String> headerOrder = Arrays.asList(FULLNAME, DESCRIPTION, VERSION, INSTALLEDBY, DATE, TYPE, CHECKSUM, COLLECTIONNAME);
         finalString += generateHeaderText(headerOrder);
         finalString += generateDataLine(headerOrder);
         writeFile(finalString);

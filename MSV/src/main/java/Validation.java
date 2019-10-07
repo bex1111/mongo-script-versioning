@@ -4,8 +4,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(name = "migrate")
-public class Migrate extends AbstractMojo {
+@Mojo(name = "validation")
+public class Validation extends AbstractMojo {
 
     @Parameter(required = true)
     private String dbName;
@@ -26,7 +26,7 @@ public class Migrate extends AbstractMojo {
 
     public void execute() throws MojoExecutionException {
         try {
-            new Main(dbName, dbAddress, dbPort, dbPassword, dbUsername).executeMigrate(fileLocation);
+            new Main(dbName, dbAddress, dbPort, dbPassword, dbUsername).executeValidation(fileLocation);
         } catch (MSVException e) {
             throw new MojoExecutionException(e.getMessage(), e.getCause());
         } catch (Exception e) {

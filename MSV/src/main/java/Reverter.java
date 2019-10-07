@@ -4,8 +4,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(name = "migrate")
-public class Migrate extends AbstractMojo {
+@Mojo(name = "reverter")
+public class Reverter extends AbstractMojo {
 
     @Parameter(required = true)
     private String dbName;
@@ -21,12 +21,12 @@ public class Migrate extends AbstractMojo {
     private String dbUsername;
 
     @Parameter
-    private String fileLocation;
+    private String revertVersion;
 
 
     public void execute() throws MojoExecutionException {
         try {
-            new Main(dbName, dbAddress, dbPort, dbPassword, dbUsername).executeMigrate(fileLocation);
+            new Main(dbName, dbAddress, dbPort, dbPassword, dbUsername).executeReverter(revertVersion);
         } catch (MSVException e) {
             throw new MojoExecutionException(e.getMessage(), e.getCause());
         } catch (Exception e) {

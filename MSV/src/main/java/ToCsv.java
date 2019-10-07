@@ -4,8 +4,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(name = "migrate")
-public class Migrate extends AbstractMojo {
+@Mojo(name = "tocsv")
+public class ToCsv extends AbstractMojo {
 
     @Parameter(required = true)
     private String dbName;
@@ -20,13 +20,13 @@ public class Migrate extends AbstractMojo {
     @Parameter
     private String dbUsername;
 
-    @Parameter
-    private String fileLocation;
+    @Parameter(required = true)
+    private String outputLocation;
 
 
     public void execute() throws MojoExecutionException {
         try {
-            new Main(dbName, dbAddress, dbPort, dbPassword, dbUsername).executeMigrate(fileLocation);
+            new Main(dbName, dbAddress, dbPort, dbPassword, dbUsername).executeToCsv(outputLocation);
         } catch (MSVException e) {
             throw new MojoExecutionException(e.getMessage(), e.getCause());
         } catch (Exception e) {

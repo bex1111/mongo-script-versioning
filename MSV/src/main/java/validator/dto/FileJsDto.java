@@ -8,7 +8,8 @@ import lombok.Data;
 public class FileJsDto extends FileBaseDto {
 
     @Builder
-    public FileJsDto(String fileName, String name, String version) {
-        super(fileName, name, version);
+    public FileJsDto(String fileName, String description, String version) {
+        super(fileName, description, version);
     }
+
 }

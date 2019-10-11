@@ -25,7 +25,7 @@ public class ValidatorFiles {
             throw MSVExceptionFactory.wrongJsonFileNameFormat();
         }
         return FileJsonDto.builder()
-                .version(fileValues[0]).fileName(name).name(fileValues[1]).collectionName(fileValues[2]).build();
+                .version(fileValues[0]).fileName(name).description(fileValues[1]).collectionName(fileValues[2]).build();
     }
 
     public FileJsDto fileJsValidator(String[] fileValues, String name) {
@@ -33,7 +33,7 @@ public class ValidatorFiles {
             throw MSVExceptionFactory.wrongJsFileNameFormat();
         }
         return FileJsDto.builder()
-                .version(fileValues[0]).fileName(name).name(fileValues[1]).build();
+                .version(fileValues[0]).fileName(name).description(fileValues[1]).build();
     }
 
     public void listUniq(List<String> fileVersion) {

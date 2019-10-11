@@ -12,20 +12,16 @@ public class MSVExceptionFactory {
         return new MSVException("Wrong file description format! (Example: 0001_name.js)");
     }
 
-    public static MSVException wrongVersionFormat() {
-        return new MSVException("Wrong version format, 4 digit is acceptable! (Example: 0001)");
-    }
-
-    public static MSVException wrongEvalFail(String fileName) {
-        return new MSVException("Cannot eval js file: " + fileName);
+    public static MSVException wrongEvalFail(String fileName, Throwable e) {
+        return new MSVException("Cannot eval js file: " + fileName, e);
     }
 
 
-    public static MSVException jsonParseFail(String fileName) {
-        return new MSVException("Cannot parse json file: " + fileName);
+    public static MSVException jsonParseFail(String fileName, Throwable e) {
+        return new MSVException("Cannot parse json file: " + fileName, e);
     }
 
-    public static MSVException jsonInsertFail(String fileName) {
+    public static MSVException jsonInsertFail(String fileName, Throwable e) {
         return new MSVException("Cannot insert json. Filename: " + fileName);
     }
 
@@ -47,6 +43,10 @@ public class MSVExceptionFactory {
 
     public static MSVException mongoAuthProblem() {
         return new MSVException("Cannot authenticate to MongoDB");
+    }
+
+    public static MSVException revertVersionNotExist() {
+        return new MSVException("Reverted version is not exist!");
     }
 
 

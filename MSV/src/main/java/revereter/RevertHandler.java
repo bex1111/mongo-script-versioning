@@ -1,5 +1,6 @@
 package revereter;
 
+import exception.MSVExceptionFactory;
 import repository.MSVRepository;
 
 import static java.util.Objects.isNull;
@@ -21,6 +22,8 @@ public class RevertHandler {
     private void checkVersionExist() {
         if (msvRepository.versionExist(revertVersion)) {
             startRevert();
+        } else {
+            throw MSVExceptionFactory.revertVersionNotExist();
         }
     }
 

@@ -5,8 +5,6 @@ import com.mongodb.util.JSON;
 import com.mongodb.util.JSONParseException;
 import exception.MSVExceptionFactory;
 
-import static util.Logger.log;
-
 public class JsonImporter extends BaseImporter {
 
     public JsonImporter(DB db) {
@@ -23,11 +21,9 @@ public class JsonImporter extends BaseImporter {
                 ((BasicDBList) dbObject).forEach(item -> collection.insert((DBObject) item));
             }
         } catch (JSONParseException e) {
-            log().error(e.getMessage());
-            throw MSVExceptionFactory.jsonParseFail(fileName);
+            throw MSVExceptionFactory.jsonParseFail(fileName, e);
         } catch (MongoException e) {
-            log().error(e.getMessage());
-            throw MSVExceptionFactory.jsonInsertFail(fileName);
+            throw MSVExceptionFactory.jsonInsertFail(fileName, e);
         }
     }
 

@@ -22,8 +22,6 @@ public class JsonImporter extends BaseImporter {
             }
         } catch (JSONParseException e) {
             throw MSVExceptionFactory.jsonParseFail(fileName, e);
-        } catch (MongoException e) {
-            throw MSVExceptionFactory.jsonInsertFail(fileName, e);
         }
     }
 

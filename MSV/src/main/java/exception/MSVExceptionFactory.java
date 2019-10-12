@@ -21,10 +21,6 @@ public class MSVExceptionFactory {
         return new MSVException("Cannot parse json file: " + fileName, e);
     }
 
-    public static MSVException jsonInsertFail(String fileName, Throwable e) {
-        return new MSVException("Cannot insert json. Filename: " + fileName);
-    }
-
     public static MSVException notUniqVersion() {
         return new MSVException("Not uniq file version");
     }

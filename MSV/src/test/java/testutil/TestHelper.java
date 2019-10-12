@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 public class TestHelper {
 
     DB db;
+    DB fakeDB;
     String fileLocation;
 
 
@@ -29,6 +30,11 @@ public class TestHelper {
     private void initDB() throws UnknownHostException {
         Mongo mongo = new Mongo("localhost", 27017);
         db = mongo.getDB("MSVtest");
+    }
+
+    private void initFakeDB() throws UnknownHostException {
+        Mongo mongo = new Mongo("localhost", 27017);
+        fakeDB = mongo.getDB("MSVtest");
     }
 
 

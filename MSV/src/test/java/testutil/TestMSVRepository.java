@@ -1,11 +1,14 @@
 package testutil;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+
+import static util.Constans.VERSION;
 
 @AllArgsConstructor
 public class TestMSVRepository {
@@ -30,6 +33,12 @@ public class TestMSVRepository {
     public List<DBObject> findAllInCollection(String name) {
         DBCursor cursor = db.getCollection(name).find();
         return cursor.toArray();
+    }
+
+    public void fillDummyVersion() {
+        clearMsvCollection();
+        db.getCollection(MSVCOLLECTIONNAME).insert(new BasicDBObject(VERSION, "0001"), new BasicDBObject(VERSION, "0002"));
+
     }
 
 

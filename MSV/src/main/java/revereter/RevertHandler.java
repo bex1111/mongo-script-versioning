@@ -20,7 +20,7 @@ public class RevertHandler {
     }
 
     private void checkVersionExist() {
-        if (msvRepository.versionExist(revertVersion)) {
+        if (isNull(revertVersion) || msvRepository.versionExist(revertVersion)) {
             startRevert();
         } else {
             throw MSVExceptionFactory.revertVersionNotExist();

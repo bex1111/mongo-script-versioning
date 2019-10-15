@@ -8,7 +8,6 @@ import repository.MSVRepository;
 import testutil.TestHelper;
 import testutil.TestMSVRepository;
 
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,11 +22,7 @@ public class MigrateHandlerTest {
     private TestMSVRepository testMSVRepository;
 
     public MigrateHandlerTest() {
-        try {
-            testHelper = new TestHelper();
-        } catch (UnknownHostException e) {
-            Assertions.fail("No mongo");
-        }
+        testHelper = new TestHelper();
         msvRepository = new MSVRepository(testHelper.getDb());
         testMSVRepository = new TestMSVRepository(testHelper.getDb());
     }

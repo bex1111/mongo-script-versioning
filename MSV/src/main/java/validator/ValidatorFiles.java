@@ -2,7 +2,6 @@ package validator;
 
 import exception.MSVExceptionFactory;
 import lombok.RequiredArgsConstructor;
-import org.codehaus.plexus.util.StringUtils;
 import repository.MSVRepository;
 import util.Hash;
 import validator.dto.FileJsDto;
@@ -21,7 +20,7 @@ public class ValidatorFiles {
     private final MSVRepository msvRepository;
 
     public FileJsonDto fileJsonValidator(String[] fileValues, String name) {
-        if (fileValues.length != 3 || StringUtils.isBlank(fileValues[1])) {
+        if (fileValues.length != 3 || name.contains(" ")) {
             throw MSVExceptionFactory.wrongJsonFileNameFormat();
         }
         return FileJsonDto.builder()
@@ -29,7 +28,7 @@ public class ValidatorFiles {
     }
 
     public FileJsDto fileJsValidator(String[] fileValues, String name) {
-        if (fileValues.length != 2 || StringUtils.isBlank(fileValues[1])) {
+        if (fileValues.length != 2 || name.contains(" ")) {
             throw MSVExceptionFactory.wrongJsFileNameFormat();
         }
         return FileJsDto.builder()

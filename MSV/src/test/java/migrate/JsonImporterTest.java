@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import testutil.TestHelper;
 import testutil.TestMSVRepository;
 
-import java.net.UnknownHostException;
 import java.util.List;
 
 public class JsonImporterTest {
@@ -18,11 +17,7 @@ public class JsonImporterTest {
     private static String TESTCOLLECTIONNAME = "test";
 
     public JsonImporterTest() {
-        try {
-            testHelper = new TestHelper();
-        } catch (UnknownHostException e) {
-            Assertions.fail("No mongo");
-        }
+        testHelper = new TestHelper();
         testMSVRepository = new TestMSVRepository(testHelper.getDb());
         jsonImporter = new JsonImporter(testHelper.getDb());
     }

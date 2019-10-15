@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.List;
 
-import static util.Constans.VERSION;
+import static util.Constans.*;
 
 @AllArgsConstructor
 public class TestMSVRepository {
@@ -38,7 +38,28 @@ public class TestMSVRepository {
     public void fillDummyVersion() {
         clearMsvCollection();
         db.getCollection(MSVCOLLECTIONNAME).insert(new BasicDBObject(VERSION, "0001"), new BasicDBObject(VERSION, "0002"));
+    }
 
+    public void fillDummyObject() {
+        BasicDBObject newFile = new BasicDBObject();
+        newFile.put(COLLECTIONNAME, "asd");
+        newFile.put(TYPE, "Json");
+        newFile.put(VERSION, "asd");
+        newFile.put(DESCRIPTION, "asd");
+        newFile.put(FULLNAME, "0002_test_test.json");
+        newFile.put(CHECKSUM, "asd");
+        newFile.put(INSTALLEDBY, "asd");
+        newFile.put(DATE, "asd");
+        BasicDBObject newFile2 = new BasicDBObject();
+        newFile2.put(TYPE, "Js");
+        newFile2.put(VERSION, "dummy");
+        newFile2.put(DESCRIPTION, "dummy");
+        newFile2.put(FULLNAME, "0001_test.js");
+        newFile2.put(CHECKSUM, "dummy");
+        newFile2.put(INSTALLEDBY, "dummy");
+        newFile2.put(DATE, "dummy");
+        db.getCollection(MSVCOLLECTIONNAME).insert(newFile);
+        db.getCollection(MSVCOLLECTIONNAME).insert(newFile2);
     }
 
 

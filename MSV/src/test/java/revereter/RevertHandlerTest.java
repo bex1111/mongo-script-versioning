@@ -8,7 +8,6 @@ import repository.MSVRepository;
 import testutil.TestHelper;
 import testutil.TestMSVRepository;
 
-import java.net.UnknownHostException;
 import java.util.List;
 
 import static util.Constans.VERSION;
@@ -19,11 +18,7 @@ public class RevertHandlerTest {
     private TestMSVRepository testMSVRepository;
 
     public RevertHandlerTest() {
-        try {
-            testHelper = new TestHelper();
-        } catch (UnknownHostException e) {
-            Assertions.fail("No mongo");
-        }
+        testHelper = new TestHelper();
         msvRepository = new MSVRepository(testHelper.getDb());
         testMSVRepository = new TestMSVRepository(testHelper.getDb());
     }

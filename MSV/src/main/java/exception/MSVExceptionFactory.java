@@ -26,7 +26,7 @@ public class MSVExceptionFactory {
     }
 
     public static MSVException hashNotEqual(String fileName) {
-        return new MSVException("You change file which had already imported! (" + fileName + ")");
+        return new MSVException("You wanna change file which had already imported! (" + fileName + ")");
     }
 
     public static MSVException cannotReadFile(String filePath, IOException e) {

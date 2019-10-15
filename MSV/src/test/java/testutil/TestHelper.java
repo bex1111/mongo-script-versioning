@@ -3,6 +3,7 @@ package testutil;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import lombok.Data;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.File;
 import java.net.UnknownHostException;
@@ -16,7 +17,7 @@ public class TestHelper {
     String fileLocation;
 
 
-    public TestHelper() throws UnknownHostException {
+    public TestHelper() {
         initDB();
         initFileLocation();
     }
@@ -27,14 +28,13 @@ public class TestHelper {
         fileLocation = file.getAbsolutePath().replace(File.separator + fileName, "");
     }
 
-    private void initDB() throws UnknownHostException {
-        Mongo mongo = new Mongo("localhost", 27017);
-        db = mongo.getDB("MSVtest");
-    }
-
-    private void initFakeDB() throws UnknownHostException {
-        Mongo mongo = new Mongo("localhost", 27017);
-        fakeDB = mongo.getDB("MSVtest");
+    private void initDB() {
+        try {
+            Mongo mongo = new Mongo("localhost", 27017);
+            db = mongo.getDB("MSVtest");
+        } catch (UnknownHostException e) {
+            Assertions.fail("Mongo innit problem: " + e.getMessage());
+        }
     }
 
 

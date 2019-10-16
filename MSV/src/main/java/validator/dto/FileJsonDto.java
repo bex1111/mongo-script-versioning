@@ -1,10 +1,10 @@
 package validator.dto;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
 
-@Data
+@Getter
 public class FileJsonDto extends FileBaseDto {
 
 

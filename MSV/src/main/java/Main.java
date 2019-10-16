@@ -32,7 +32,6 @@ public class Main {
 
     public void executeReverter(String revertVersion) {
         new RevertHandler(msvRepository, revertVersion);
-
     }
 
     public void executeValidation(String fileLocation) {

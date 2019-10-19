@@ -18,19 +18,28 @@ import static util.FileHandler.readLineByLine;
 public class ValidatorFiles {
 
     private final MSVRepository msvRepository;
+    private final String CHARACHTERORNUMBERREQEX = "^[a-zA-Z0-9]+$";
 
     public FileJsonDto fileJsonValidator(String[] fileValues, String name) {
         if (fileValues.length != 3 || name.contains(" ")) {
             throw MSVExceptionFactory.wrongJsonFileNameFormat();
         }
+        versionValidator(fileValues[0]);
         return FileJsonDto.builder()
                 .version(fileValues[0]).fileName(name).description(fileValues[1]).collectionName(fileValues[2]).build();
+    }
+
+    private void versionValidator(String version) {
+        if (!version.matches(CHARACHTERORNUMBERREQEX)) {
+            throw MSVExceptionFactory.wrongVersionFormat();
+        }
     }
 
     public FileJsDto fileJsValidator(String[] fileValues, String name) {
         if (fileValues.length != 2 || name.contains(" ")) {
             throw MSVExceptionFactory.wrongJsFileNameFormat();
         }
+        versionValidator(fileValues[0]);
         return FileJsDto.builder()
                 .version(fileValues[0]).fileName(name).description(fileValues[1]).build();
     }

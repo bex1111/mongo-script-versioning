@@ -12,6 +12,10 @@ public class MSVExceptionFactory {
         return new MSVException("Wrong file description format! (Example: 0001_name.js)");
     }
 
+    public static MSVException wrongVersionFormat() {
+        return new MSVException("Wrong version format! Version contains only small letter,capital letter and numeric character.");
+    }
+
     public static MSVException wrongEvalFail(String fileName, Throwable e) {
         return new MSVException("Cannot eval js file: " + fileName, e);
     }

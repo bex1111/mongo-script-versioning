@@ -28,13 +28,13 @@
             <plugin>
                 <groupId>hu.msv</groupId>
                 <artifactId>msv-maven-plugin</artifactId>
-                <version>0.1</version>
+                <version>0.0.1</version>
                 <configuration>
                     <dbName>MSV</dbName>
                     <dbAddress>localhost</dbAddress>
                     <dbPort>27017</dbPort>
                     <fileLocation>./src/main/resources/msv</fileLocation>
-                    <outputLocation>E:\MyProject\szakdolgozat\tocsv</outputLocation>
+                    <outputLocation>../tocsv</outputLocation>
                     <revertVersion>${revertVersion}</revertVersion>
                 </configuration>
             </plugin>

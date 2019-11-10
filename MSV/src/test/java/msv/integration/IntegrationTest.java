@@ -57,12 +57,12 @@ public class IntegrationTest {
 
     @Test
     public void revertTest() throws IllegalAccessException {
-        Reverter reverter = new Reverter();
-        setDbName(reverter);
-        setDbAddress(reverter);
-        setDbPort(reverter);
-        setRevertVersion(reverter);
-        Assertions.assertThrows(MojoExecutionException.class, () -> reverter.execute());
+        Revert revert = new Revert();
+        setDbName(revert);
+        setDbAddress(revert);
+        setDbPort(revert);
+        setRevertVersion(revert);
+        Assertions.assertThrows(MojoExecutionException.class, () -> revert.execute());
     }
 
     @Test
@@ -77,13 +77,13 @@ public class IntegrationTest {
     }
 
     @Test
-    public void ValidationTest() throws IllegalAccessException, MojoExecutionException {
-        Validation validation = new Validation();
-        setDbName(validation);
-        setDbAddress(validation);
-        setDbPort(validation);
-        setFileLocation(validation);
-        validation.execute();
+    public void validateTest() throws IllegalAccessException, MojoExecutionException {
+        Validate validate = new Validate();
+        setDbName(validate);
+        setDbAddress(validate);
+        setDbPort(validate);
+        setFileLocation(validate);
+        validate.execute();
     }
 
 }

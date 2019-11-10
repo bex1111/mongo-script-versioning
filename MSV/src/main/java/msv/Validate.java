@@ -6,8 +6,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(name = "validation")
-public class Validation extends AbstractMojo {
+@Mojo(name = "validate")
+public class Validate extends AbstractMojo {
 
     @Parameter(required = true)
     private String dbName;

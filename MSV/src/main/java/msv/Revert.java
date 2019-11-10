@@ -6,8 +6,8 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(name = "reverter")
-public class Reverter extends AbstractMojo {
+@Mojo(name = "revert")
+public class Revert extends AbstractMojo {
 
     @Parameter(required = true)
     private String dbName;

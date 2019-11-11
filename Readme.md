@@ -69,4 +69,31 @@ If your database goes inconsistent state. You can revert changes with msv in msv
 If you doesn't specify any version, MSV revert all version. If you do, your msv collection goes to that version.
 
 ## ToCsv
+
+### Command:
+``` mvn msv:tocsv ```
+
+### About
+
+This command can generate document for you, which contain every usefull information about migration history.
+This document type is csv, so you can easily open it in Excel.
+
+Document contains this fields:
+- full_name (File name)
+- description (File second tag)
+- version (File first tag)
+- installed_by (Migrate command executor username )
+- date (Migration date)
+- type (File type)
+- checksum (Check sum from file)
+- collection_name (Json file third tag)
+
 ## Listing
+
+### Command:
+``` mvn msv:listing ```
+
+### About
+
+This command help you if you wanna debug something or getting info what is in the database.
+ 

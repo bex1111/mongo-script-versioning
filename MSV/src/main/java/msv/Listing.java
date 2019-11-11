@@ -6,7 +6,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
-@Mojo(name = "msv/listing")
+@Mojo(name = "listing")
 public class Listing extends AbstractMojo {
 
     @Parameter(required = true)

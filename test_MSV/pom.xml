@@ -13,28 +13,18 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-
-    <dependencies>
-        <dependency>
-            <groupId>hu.msv</groupId>
-            <artifactId>msv-maven-plugin</artifactId>
-            <version>0.1</version>
-        </dependency>
-
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>
-                <groupId>hu.msv</groupId>
+                <groupId>com.github.bex1111</groupId>
                 <artifactId>msv-maven-plugin</artifactId>
-                <version>0.1</version>
+                <version>0.1.0</version>
                 <configuration>
-                    <dbName>MSVtest</dbName>
+                    <dbName>MSV</dbName>
                     <dbAddress>localhost</dbAddress>
                     <dbPort>27017</dbPort>
                     <fileLocation>./src/main/resources/msv</fileLocation>
-                    <outputLocation>E:\MyProject\szakdolgozat\tocsv</outputLocation>
+                    <outputLocation>../tocsv</outputLocation>
                     <revertVersion>${revertVersion}</revertVersion>
                 </configuration>
             </plugin>

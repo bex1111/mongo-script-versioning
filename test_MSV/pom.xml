@@ -26,7 +26,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>hu.msv</groupId>
+                <groupId>com.github.bex1111</groupId>
                 <artifactId>msv-maven-plugin</artifactId>
                 <version>0.0.1</version>
                 <configuration>

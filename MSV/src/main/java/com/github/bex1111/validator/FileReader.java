@@ -52,7 +52,7 @@ public class FileReader {
 
     private List<FileBaseDto> initFileLists(List<String> fileNames) {
         List<FileBaseDto> fileBaseDtos = new ArrayList<>();
-        fileNames.forEach(x -> {
+        mergeTwoList(fileNames, msvRepository.migratedFileNameList()).forEach(x -> {
             if (x.contains(JSONTYPE)) {
                 String[] fileValues = x.replace(JSONTYPE, "").split("_");
                 validatorFiles.validateFileText(fileLocation, x);
@@ -66,6 +66,15 @@ public class FileReader {
             }
         });
         return fileBaseDtos;
+    }
+
+    private List<String> mergeTwoList(List<String> fileNames, List<String> migratedList) {
+        migratedList.forEach(x -> {
+            if (!fileNames.contains(x)) {
+                fileNames.add(x);
+            }
+        });
+        return fileNames;
     }
 
 

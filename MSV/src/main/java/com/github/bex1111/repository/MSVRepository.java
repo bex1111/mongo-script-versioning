@@ -9,8 +9,8 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.bex1111.util.Constans.CHECKSUM;
-import static com.github.bex1111.util.Constans.FULLNAME;
+import static com.github.bex1111.util.Constans.*;
+import static java.util.stream.Collectors.toList;
 
 @AllArgsConstructor
 public class MSVRepository {
@@ -24,7 +24,7 @@ public class MSVRepository {
     }
 
     public List<DBObject> findAllSortWithVersion() {
-        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject("version", 1));
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject(VERSION, 1));
         return cursor.toArray();
     }
 
@@ -40,13 +40,18 @@ public class MSVRepository {
     }
 
     public boolean versionExist(String version) {
-        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find(new BasicDBObject("version", version));
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find(new BasicDBObject(VERSION, version));
         return cursor.hasNext();
     }
 
+    public List<String> migratedFileNameList() {
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find();
+        return cursor.toArray().stream().map(x -> x.get(FULLNAME).toString()).collect(toList());
+    }
+
     public Optional<String> getMaxVersion() {
-        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject("version", -1)).limit(1);
-        return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get("version").toString());
+        DBCursor cursor = db.getCollection(MSVCOLLECTIONNAME).find().sort(new BasicDBObject(VERSION, -1)).limit(1);
+        return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get(VERSION).toString());
     }
 
     public void insertNewFile(BasicDBObject basicDBObject) {

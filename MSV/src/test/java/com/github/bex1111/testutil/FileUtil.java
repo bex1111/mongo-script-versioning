@@ -34,4 +34,14 @@ public class FileUtil {
         });
     }
 
+
+    public static void deleteFile(String location) {
+        try {
+            Files.deleteIfExists(Paths.get(location));
+        } catch (Exception e) {
+            Assertions.fail("Cannot delete files");
+        }
+
+    }
+
 }

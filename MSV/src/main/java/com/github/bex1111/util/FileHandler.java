@@ -25,7 +25,7 @@ public class FileHandler {
         try (Stream<String> stream = Files.lines(Paths.get(filePath + File.separator + fileName), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         } catch (IOException e) {
-            throw MSVExceptionFactory.cannotReadFile(filePath, e);
+            throw MSVExceptionFactory.cannotReadFile(fileName, e);
         }
         return contentBuilder.toString();
     }

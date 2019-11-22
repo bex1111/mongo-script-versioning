@@ -14,7 +14,6 @@ import java.util.Arrays;
 
 import static com.github.bex1111.testutil.FileConst.F0001;
 import static com.github.bex1111.testutil.FileConst.F0002;
-import static com.github.bex1111.util.Logger.log;
 
 public class ValidatorFilesTest {
 
@@ -99,9 +98,7 @@ public class ValidatorFilesTest {
     public void validateFileTextFailJson() {
         testMSVRepository.clearMsvCollection();
         testMSVRepository.fillDummyObject();
-        log().info("EZ AZASDASD");
         Assertions.assertThrows(MSVException.class, () -> validatorFiles.validateFileText(testHelper.getFileLocation(), "0002_test_test.json"));
-
     }
 
     @Test

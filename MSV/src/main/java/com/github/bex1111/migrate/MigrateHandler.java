@@ -42,7 +42,7 @@ public class MigrateHandler {
                 jsonImporter.importJson(item.getFileName(), readLineByLine(fileLocation, item.getFileName()), ((FileJsonDto) item).getCollectionName());
                 msvRepository.insertNewFile(generateJsonBasicObject((FileJsonDto) item));
             }
-            log().info("com.github.bex1111.Migrate file: " + item.getFileName());
+            log().info("Migrate file: " + item.getFileName());
 
         });
     }

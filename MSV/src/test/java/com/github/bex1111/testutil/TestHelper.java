@@ -12,6 +12,8 @@ import java.net.UnknownHostException;
 @Data
 public class TestHelper {
 
+    public static String TESTDBNAME = "MSVtest";
+
     DB db;
     DB fakeDB;
     String fileLocation;
@@ -31,7 +33,7 @@ public class TestHelper {
     private void initDB() {
         try {
             Mongo mongo = new Mongo("localhost", 27017);
-            db = mongo.getDB("MSVtest");
+            db = mongo.getDB(TESTDBNAME);
         } catch (UnknownHostException e) {
             Assertions.fail("Mongo innit problem: " + e.getMessage());
         }

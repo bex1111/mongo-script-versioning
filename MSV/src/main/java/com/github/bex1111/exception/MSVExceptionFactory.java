@@ -25,6 +25,10 @@ public class MSVExceptionFactory {
         return new MSVException("Cannot parse json file: " + fileName, e);
     }
 
+    public static MSVException jsonParseFail(String fileName) {
+        return new MSVException("Cannot parse json file: " + fileName);
+    }
+
     public static MSVException notUniqVersion() {
         return new MSVException("Not uniq file version");
     }

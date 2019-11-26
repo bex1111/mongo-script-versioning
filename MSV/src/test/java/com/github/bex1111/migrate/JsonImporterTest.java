@@ -25,12 +25,13 @@ public class JsonImporterTest {
     @Test
     public void jsonImporterTest1() {
         testMSVRepository.dropCollection(TESTCOLLECTIONNAME);
-        jsonImporter.importJson("dummy", "[{\n" +
+        String testJson = "[{\n" +
                 "  \"asd\":\"asd\"\n" +
                 "},{\n" +
                 "  \"test\":\"test\"\n" +
                 "}\n" +
-                "  ]", TESTCOLLECTIONNAME);
+                "  ]";
+        jsonImporter.importJson("dummy", testJson.split(","), TESTCOLLECTIONNAME);
         List<DBObject> dbObjectList = testMSVRepository.findAllInCollection(TESTCOLLECTIONNAME);
         Assertions.assertEquals(dbObjectList.size(), 2);
         Assertions.assertEquals(dbObjectList.get(0).get("asd"), "asd");
@@ -41,9 +42,10 @@ public class JsonImporterTest {
     @Test
     public void jsonImporterTest2() {
         testMSVRepository.dropCollection(TESTCOLLECTIONNAME);
-        jsonImporter.importJson("dummy", "{\n" +
+        String testJson = "{\n" +
                 "  \"asd\":\"asd\"\n" +
-                "}", TESTCOLLECTIONNAME);
+                "}";
+        jsonImporter.importJson("dummy", testJson.split(","), TESTCOLLECTIONNAME);
         List<DBObject> dbObjectList = testMSVRepository.findAllInCollection(TESTCOLLECTIONNAME);
         Assertions.assertEquals(dbObjectList.size(), 1);
         Assertions.assertEquals(dbObjectList.get(0).get("asd"), "asd");
@@ -52,37 +54,40 @@ public class JsonImporterTest {
     @Test
     public void jsonImporterTest3() {
         testMSVRepository.dropCollection(TESTCOLLECTIONNAME);
+        String testJson = "{\n" +
+                "  \"asd\" \"asd\"\n" +
+                "}";
         Assertions.assertThrows(MSVException.class, () -> {
-            jsonImporter.importJson("dummy", "{\n" +
-                    "  \"asd\" \"asd\"\n" +
-                    "}", TESTCOLLECTIONNAME);
+            jsonImporter.importJson("dummy", testJson.split(","), TESTCOLLECTIONNAME);
         });
     }
 
     @Test
     public void jsonImporterTest4() {
         testMSVRepository.dropCollection(TESTCOLLECTIONNAME);
+        String testJson = "[{\n" +
+                "  \"asd\":\"asd\"\n" +
+                "}  {\n" +
+                "  \"test\":\"test\"\n" +
+                "}\n" +
+                "  ]";
         Assertions.assertThrows(MSVException.class, () -> {
-            jsonImporter.importJson("dummy", "[{\n" +
-                    "  \"asd\":\"asd\"\n" +
-                    "}  {\n" +
-                    "  \"test\":\"test\"\n" +
-                    "}\n" +
-                    "  ]", TESTCOLLECTIONNAME);
+            jsonImporter.importJson("dummy", testJson.split(","), TESTCOLLECTIONNAME);
         });
     }
 
     @Test
     public void jsonImporterTest5() {
         testMSVRepository.dropCollection(TESTCOLLECTIONNAME);
-        jsonImporter.importJson("dummy", "[{\n" +
+        String testJson = "[{\n" +
                 "  \"asd\":\"asd\"\n" +
                 "},{\n" +
                 "  \"test\":\"test\"\n" +
                 "}\n" + ",{\n" +
                 "  \"test\":\"test\"\n" +
                 "}\n" +
-                "  ]", TESTCOLLECTIONNAME);
+                "  ]";
+        jsonImporter.importJson("dummy", testJson.split(","), TESTCOLLECTIONNAME);
         List<DBObject> dbObjectList = testMSVRepository.findAllInCollection(TESTCOLLECTIONNAME);
         Assertions.assertEquals(dbObjectList.size(), 3);
         Assertions.assertEquals(dbObjectList.get(0).get("asd"), "asd");

@@ -2,10 +2,14 @@ package com.github.bex1111.integration;
 
 import com.github.bex1111.*;
 import com.github.bex1111.testutil.FileUtil;
+import com.github.bex1111.testutil.TestHelper;
+import com.github.bex1111.testutil.TestMSVRepository;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static com.github.bex1111.testutil.TestHelper.TESTDBNAME;
 
 
 public class IntegrationTest {
@@ -13,7 +17,7 @@ public class IntegrationTest {
     private final static String LOCATION = "./src/test/resources";
 
     private void setDbName(Object reference) throws IllegalAccessException {
-        FieldUtils.writeField(reference, "dbName", "MSV", true);
+        FieldUtils.writeField(reference, "dbName", TESTDBNAME, true);
     }
 
     private void setDbAddress(Object reference) throws IllegalAccessException {
@@ -35,6 +39,16 @@ public class IntegrationTest {
     private void setRevertVersion(Object reference) throws IllegalAccessException {
         FieldUtils.writeField(reference, "revertVersion", "0.1.0", true);
     }
+
+
+    private final TestHelper testHelper;
+    private final TestMSVRepository testMSVRepository;
+
+    public IntegrationTest() {
+        this.testHelper = new TestHelper();
+        this.testMSVRepository = new TestMSVRepository(testHelper.getDb());
+    }
+
 
     @Test
     public void listingTest() throws MojoExecutionException, IllegalAccessException {
@@ -78,6 +92,7 @@ public class IntegrationTest {
 
     @Test
     public void validateTest() throws IllegalAccessException, MojoExecutionException {
+        testMSVRepository.clearMsvCollection();
         Validate validate = new Validate();
         setDbName(validate);
         setDbAddress(validate);

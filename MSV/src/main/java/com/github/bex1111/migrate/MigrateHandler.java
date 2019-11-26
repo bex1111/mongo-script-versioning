@@ -39,7 +39,7 @@ public class MigrateHandler {
                 jsImporter.executeJsCommand(item.getFileName(), readLineByLine(fileLocation, item.getFileName()));
                 msvRepository.insertNewFile(generateJsBasicObject((FileJsDto) item));
             } else {
-                jsonImporter.importJson(item.getFileName(), readLineByLine(fileLocation, item.getFileName()), ((FileJsonDto) item).getCollectionName());
+                jsonImporter.importJson(item.getFileName(), readLineByLine(fileLocation, item.getFileName()).split(","), ((FileJsonDto) item).getCollectionName());
                 msvRepository.insertNewFile(generateJsonBasicObject((FileJsonDto) item));
             }
             log().info("Migrate file: " + item.getFileName());

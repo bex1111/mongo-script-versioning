@@ -1,4 +1,4 @@
-package com.github.bex1111.filewriter;
+package com.github.bex1111.csvwriter;
 
 import com.github.bex1111.repository.MSVRepository;
 import com.github.bex1111.testutil.TestHelper;

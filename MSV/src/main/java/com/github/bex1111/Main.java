@@ -1,7 +1,7 @@
 package com.github.bex1111;
 
+import com.github.bex1111.csvwriter.CsvGenerator;
 import com.github.bex1111.exception.MSVExceptionFactory;
-import com.github.bex1111.filewriter.CsvGenerator;
 import com.github.bex1111.listing.ListHandler;
 import com.github.bex1111.migrate.MigrateHandler;
 import com.github.bex1111.repository.MSVRepository;

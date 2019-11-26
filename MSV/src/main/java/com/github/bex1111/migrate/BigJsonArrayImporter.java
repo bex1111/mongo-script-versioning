@@ -9,13 +9,8 @@ import org.codehaus.plexus.util.StringUtils;
 
 public class BigJsonArrayImporter {
 
-    private int avObjectSize;
+
     private final static String JOININGCHARACHTER = ",";
-
-    public BigJsonArrayImporter() {
-        this.avObjectSize = 10;
-    }
-
 
     public void processJsonArray(DBCollection collection, String[] jsonText) {
         deleteFirstAndLastArrayChar(jsonText);
@@ -27,9 +22,7 @@ public class BigJsonArrayImporter {
                 objectString = "";
             }
         }
-
     }
-
 
     private void deleteFirstAndLastArrayChar(String[] jsonText) {
         jsonText[0] = jsonText[0].replaceFirst("\\[", "");
@@ -49,6 +42,5 @@ public class BigJsonArrayImporter {
             }
         }
         throw MSVExceptionFactory.jsonParseFail(fileName);
-
     }
 }

@@ -1,23 +1,23 @@
 # Mongo Script Versioning (MSV)
-Mongo script versioning is a maven plugin. It helps you to migrate your .js and .json file into the Mongo database. **It is avaiable in maven central!**
+Mongo script versioning is a maven plugin. It helps you to migrate your .js and .json file into the Mongo database. **It is avaible in maven central!**
    
 **Usage:**
 ```
-  <plugins>
-            <plugin>
-                <groupId>com.github.bex1111</groupId>
-                <artifactId>msv-maven-plugin</artifactId>
-                <version>0.3.1-SNAPSHOT</version>
-                <configuration>
-                    <dbName>MSV</dbName>
-                    <dbAddress>localhost</dbAddress>
-                    <dbPort>27017</dbPort>
-                    <fileLocation>./src/main/resources/msv</fileLocation>
-                    <outputLocation>../tocsv</outputLocation>
-                    <revertVersion>${revertVersion}</revertVersion>
-                </configuration>
-            </plugin>
-        </plugins>
+   <plugins>
+       <plugin>
+           <groupId>com.github.bex1111</groupId>
+           <artifactId>msv-maven-plugin</artifactId>
+           <version>0.3.1-SNAPSHOT</version>
+           <configuration>
+               <dbName>MSV</dbName>
+               <dbAddress>localhost</dbAddress>
+               <dbPort>27017</dbPort>
+               <fileLocation>./src/main/resources/msv</fileLocation>
+               <outputLocation>../tocsv</outputLocation>
+               <revertVersion>${revertVersion}</revertVersion>
+           </configuration>
+       </plugin>
+   </plugins>
 ```
 
 You can find a demo project under the test_MSV folder.
@@ -29,7 +29,7 @@ You can find a demo project under the test_MSV folder.
 
 ### About
 
-Migrate command migrate your file from "fileLocation" in to the mongo database. You have to follow rules when create a file. Js file name have to be like version_name.js where version specify the order. Version only contain numeric and alphabetic character. Description helps you to remember what is in the file. Json file contains one more field. It is a collection name. So json file name have to follow this convection version_description_collection.json.
+Migrate command migrate your file from "fileLocation" in to the mongo database. You have to follow rules when create a file. Js file name has to be like version_name.js where version specify the order. Version only contain numeric and alphabetic character. Description helps you to remember what is in the file. Json file contains one more field. It is a collection name. So json file name have to follow this convection version_description_collection.json.
 
 If you already migrate a file you can't change it. Otherwise you can't migrate new file. This methodology grant, that program can version controlling the files.
 
@@ -44,7 +44,7 @@ If you already migrate a file you can't change it. Otherwise you can't migrate n
 
 ### About
 
-Validate command check your file names and etc. Important, if validate run success it doesn't guaranteed that migrate will also be success.  You have to follow rules when create a file. Js file name have to be like version_name.js where version specify the order. Version only contain numeric and alphabetic character. Description helps you to remember what is in the file. Json file contains one more field. It is a collection name. So json file name have to follow this convection version_description_collection.json.
+Validate command check your file names and etc. Important, if validate run success it doesn't guaranteed that migrate will also be success.  You have to follow rules when create a file. Js file name has to be like version_name.js where version specify the order. Version only contain numeric and alphabetic character. Description helps you to remember what is in the file. Json file contains one more field. It is a collection name. So json file name have to follow this convection version_description_collection.json.
 
 If you already migrate a file you can't change it. Otherwise you can't validate or migrate new file. This methodology grant, that program can version controlling the files. Validate check this conception too.
 
@@ -73,10 +73,10 @@ If you doesn't specify any version, MSV revert all version. If you do, your msv 
 
 ### About
 
-This command can generate document for you, which contain every usefull information about migration history.
+This command can generate a document for you, which contains every usefull information about migration history.
 This document type is csv, so you can easily open it with Excel.
 
-Document contains this fields:
+Document contains these fields:
 - full_name (File name)
 - description (File second tag)
 - version (File first tag)

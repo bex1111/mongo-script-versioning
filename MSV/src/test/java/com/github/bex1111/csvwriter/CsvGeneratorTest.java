@@ -24,7 +24,7 @@ public class CsvGeneratorTest {
     }
 
     @Test
-    public void migrateHandlerTest1() {
+    public void csvGeneratorTest() {
         testMSVRepository.clearMsvCollection();
         testMSVRepository.fillDummyObject();
         new CsvGenerator(msvRepository, testHelper.getFileLocation());

@@ -6,7 +6,7 @@
     <groupId>com.github.bex1111</groupId>
     <artifactId>msv-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <version>0.3.1-SNAPSHOT</version>
+    <version>0.4.0</version>
     <name>Mongo Script Versioning</name>
     <description>Migration tool for mongoDB</description>
     <url>https://github.com/bex1111/mongo-script-versioning</url>
@@ -29,7 +29,7 @@
         <connection>scm:git:git://github.com/bex1111/mongo-script-versioning.git</connection>
         <developerConnection>scm:git:https://github.com/bex1111/mongo-script-versioning.git</developerConnection>
         <url>https://github.com/bex1111/mongo-script-versioning</url>
-        <tag>HEAD</tag>
+        <tag>msv-maven-plugin-0.4.0</tag>
     </scm>
 
     <properties>

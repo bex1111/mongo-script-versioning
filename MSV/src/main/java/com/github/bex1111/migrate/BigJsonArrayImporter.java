@@ -1,24 +1,27 @@
 package com.github.bex1111.migrate;
 
 import com.github.bex1111.exception.MSVExceptionFactory;
+import com.github.bex1111.repository.MSVRepository;
 import com.mongodb.BasicDBList;
-import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import org.codehaus.plexus.util.StringUtils;
 
-public class BigJsonArrayImporter {
+public class BigJsonArrayImporter extends BaseImporter {
 
+    public BigJsonArrayImporter(MSVRepository msvRepository) {
+        super(msvRepository);
+    }
 
     private final static String JOININGCHARACHTER = ",";
 
-    public void processJsonArray(DBCollection collection, String[] jsonText) {
+    public void processJsonArray(String collectionName, String[] jsonText) {
         deleteFirstAndLastArrayChar(jsonText);
         String objectString = "";
         for (int i = 0; i < jsonText.length; i++) {
             objectString = objectString + JOININGCHARACHTER + jsonText[i];
             if (StringUtils.countMatches(objectString, "{") == StringUtils.countMatches(objectString, "}")) {
-                collection.insert((DBObject) ((BasicDBList) JSON.parse("[" + objectString.replaceFirst(",", "") + "]")).get(0));
+                msvRepository.insertDbObject(collectionName, (DBObject) ((BasicDBList) JSON.parse("[" + objectString.replaceFirst(",", "") + "]")).get(0));
                 objectString = "";
             }
         }

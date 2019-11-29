@@ -19,7 +19,7 @@ public class JsonImporterTest {
     public JsonImporterTest() {
         testHelper = new TestHelper();
         testMSVRepository = new TestMSVRepository(testHelper.getDb());
-        jsonImporter = new JsonImporter(testHelper.getDb());
+        jsonImporter = new JsonImporter(testHelper.getMsvRepository());
     }
 
     @Test

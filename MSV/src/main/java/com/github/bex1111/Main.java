@@ -29,7 +29,7 @@ public class Main {
 
     public void executeMigrate(String fileLocation) {
         fileReader = new FileReader(fileLocation, msvRepository);
-        new MigrateHandler(fileLocation, db, fileReader.getNewFileBaseDtos(), msvRepository);
+        new MigrateHandler(fileLocation, fileReader.getNewFileBaseDtos(), msvRepository);
     }
 
     public void executeReverter(String revertVersion) {

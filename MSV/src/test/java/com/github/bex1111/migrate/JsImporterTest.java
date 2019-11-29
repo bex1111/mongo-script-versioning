@@ -19,7 +19,7 @@ public class JsImporterTest {
     public JsImporterTest() {
         testHelper = new TestHelper();
         testMSVRepository = new TestMSVRepository(testHelper.getDb());
-        jsImporter = new JsImporter(testHelper.getDb());
+        jsImporter = new JsImporter(testHelper.getMsvRepository());
     }
 
     @Test

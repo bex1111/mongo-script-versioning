@@ -54,8 +54,16 @@ public class MSVRepository {
         return cursor.size() == 0 ? Optional.empty() : Optional.ofNullable(cursor.next().get(VERSION).toString());
     }
 
-    public void insertNewFile(BasicDBObject basicDBObject) {
+    public void insertNewFileToMsv(BasicDBObject basicDBObject) {
         db.getCollection(MSVCOLLECTIONNAME).insert(basicDBObject);
+    }
+
+    public void insertDbObject(String collectionName, DBObject dbObject) {
+        db.getCollection(collectionName).insert(dbObject);
+    }
+
+    public void evalScript(String scriptText) {
+        db.eval(scriptText);
     }
 
 

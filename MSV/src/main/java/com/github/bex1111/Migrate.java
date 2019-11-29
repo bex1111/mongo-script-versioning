@@ -19,7 +19,7 @@ public class Migrate extends AbstractMojo {
     private String dbPassword;
     @Parameter
     private String dbUsername;
-    @Parameter
+    @Parameter(required = true)
     private String fileLocation;
 
     public void execute() throws MojoExecutionException {

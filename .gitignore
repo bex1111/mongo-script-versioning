@@ -22,4 +22,5 @@ selenium-debug.log
 
 # own
 /tocsv/
+/bigjson/
 MSV/release.properties

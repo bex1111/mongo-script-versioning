@@ -1,4 +1,4 @@
-package com.github.bex1111.filewriter;
+package com.github.bex1111.csvwriter;
 
 import com.github.bex1111.repository.MSVRepository;
 import com.github.bex1111.testutil.TestHelper;
@@ -24,7 +24,7 @@ public class CsvGeneratorTest {
     }
 
     @Test
-    public void migrateHandlerTest1() {
+    public void csvGeneratorTest() {
         testMSVRepository.clearMsvCollection();
         testMSVRepository.fillDummyObject();
         new CsvGenerator(msvRepository, testHelper.getFileLocation());

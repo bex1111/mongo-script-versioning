@@ -1,7 +1,7 @@
 package com.github.bex1111;
 
+import com.github.bex1111.csvwriter.CsvGenerator;
 import com.github.bex1111.exception.MSVExceptionFactory;
-import com.github.bex1111.filewriter.CsvGenerator;
 import com.github.bex1111.listing.ListHandler;
 import com.github.bex1111.migrate.MigrateHandler;
 import com.github.bex1111.repository.MSVRepository;
@@ -29,7 +29,7 @@ public class Main {
 
     public void executeMigrate(String fileLocation) {
         fileReader = new FileReader(fileLocation, msvRepository);
-        new MigrateHandler(fileLocation, db, fileReader.getNewFileBaseDtos(), msvRepository);
+        new MigrateHandler(fileLocation, fileReader.getNewFileBaseDtos(), msvRepository);
     }
 
     public void executeReverter(String revertVersion) {

@@ -1,5 +1,6 @@
 package com.github.bex1111.testutil;
 
+import com.github.bex1111.repository.MSVRepository;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import lombok.Data;
@@ -12,14 +13,18 @@ import java.net.UnknownHostException;
 @Data
 public class TestHelper {
 
-    DB db;
-    DB fakeDB;
-    String fileLocation;
+    public static String TESTDBNAME = "MSVtest";
+
+    private DB db;
+    private DB fakeDB;
+    private String fileLocation;
+    private MSVRepository msvRepository;
 
 
     public TestHelper() {
         initDB();
         initFileLocation();
+        msvRepository = new MSVRepository(db);
     }
 
     private void initFileLocation() {
@@ -31,7 +36,7 @@ public class TestHelper {
     private void initDB() {
         try {
             Mongo mongo = new Mongo("localhost", 27017);
-            db = mongo.getDB("MSVtest");
+            db = mongo.getDB(TESTDBNAME);
         } catch (UnknownHostException e) {
             Assertions.fail("Mongo innit problem: " + e.getMessage());
         }

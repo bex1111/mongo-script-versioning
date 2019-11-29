@@ -8,6 +8,7 @@ public class Constans {
     public final static String JSONTYPE = ".json";
     public final static String JSTYPE = ".js";
 
+    public final static String FILENAMESEPARATOR = "_";
 
     public final static String VERSION = "version";
     public final static String DESCRIPTION = "description";

@@ -6,7 +6,6 @@ import com.github.bex1111.validator.dto.FileJsDto;
 import com.github.bex1111.validator.dto.FileJsonDto;
 import com.github.bex1111.validator.dto.FileType;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,17 +18,16 @@ import static com.github.bex1111.util.Logger.log;
 public class MigrateHandler {
 
     private String fileLocation;
-
     private JsImporter jsImporter;
     private JsonImporter jsonImporter;
     private MSVRepository msvRepository;
 
 
-    public MigrateHandler(String fileLocation, DB db, List<FileBaseDto> fileBaseDtoList, MSVRepository msvRepository) {
+    public MigrateHandler(String fileLocation, List<FileBaseDto> fileBaseDtoList, MSVRepository msvRepository) {
         this.fileLocation = fileLocation;
-        this.jsonImporter = new JsonImporter(db);
         this.msvRepository = msvRepository;
-        this.jsImporter = new JsImporter(db);
+        this.jsonImporter = new JsonImporter(msvRepository);
+        this.jsImporter = new JsImporter(msvRepository);
         startMigrate(fileBaseDtoList);
     }
 
@@ -37,12 +35,12 @@ public class MigrateHandler {
         fileBaseDtoList.forEach(item -> {
             if (item instanceof FileJsDto) {
                 jsImporter.executeJsCommand(item.getFileName(), readLineByLine(fileLocation, item.getFileName()));
-                msvRepository.insertNewFile(generateJsBasicObject((FileJsDto) item));
+                msvRepository.insertNewFileToMsv(generateJsBasicObject((FileJsDto) item));
             } else {
-                jsonImporter.importJson(item.getFileName(), readLineByLine(fileLocation, item.getFileName()), ((FileJsonDto) item).getCollectionName());
-                msvRepository.insertNewFile(generateJsonBasicObject((FileJsonDto) item));
+                jsonImporter.importJson(item.getFileName(), readLineByLine(fileLocation, item.getFileName()).split(","), ((FileJsonDto) item).getCollectionName());
+                msvRepository.insertNewFileToMsv(generateJsonBasicObject((FileJsonDto) item));
             }
-            log().info("com.github.bex1111.Migrate file: " + item.getFileName());
+            log().info("Migrate file: " + item.getFileName());
 
         });
     }

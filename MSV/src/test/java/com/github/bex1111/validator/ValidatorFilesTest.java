@@ -2,7 +2,6 @@ package com.github.bex1111.validator;
 
 import com.github.bex1111.exception.MSVException;
 import com.github.bex1111.migrate.MigrateHandler;
-import com.github.bex1111.repository.MSVRepository;
 import com.github.bex1111.testutil.TestHelper;
 import com.github.bex1111.testutil.TestMSVRepository;
 import com.github.bex1111.validator.dto.FileJsDto;
@@ -14,19 +13,16 @@ import java.util.Arrays;
 
 import static com.github.bex1111.testutil.FileConst.F0001;
 import static com.github.bex1111.testutil.FileConst.F0002;
-import static com.github.bex1111.util.Logger.log;
 
 public class ValidatorFilesTest {
 
     private final ValidatorFiles validatorFiles;
     private final TestHelper testHelper;
-    private final MSVRepository msvRepository;
     private final TestMSVRepository testMSVRepository;
 
     public ValidatorFilesTest() {
         this.testHelper = new TestHelper();
-        this.msvRepository = new MSVRepository(testHelper.getDb());
-        this.validatorFiles = new ValidatorFiles(msvRepository);
+        this.validatorFiles = new ValidatorFiles(testHelper.getMsvRepository());
         this.testMSVRepository = new TestMSVRepository(testHelper.getDb());
     }
 
@@ -99,15 +95,13 @@ public class ValidatorFilesTest {
     public void validateFileTextFailJson() {
         testMSVRepository.clearMsvCollection();
         testMSVRepository.fillDummyObject();
-        log().info("EZ AZASDASD");
         Assertions.assertThrows(MSVException.class, () -> validatorFiles.validateFileText(testHelper.getFileLocation(), "0002_test_test.json"));
-
     }
 
     @Test
     public void validateFileTextSuccessJs() {
         testMSVRepository.clearMsvCollection();
-        new MigrateHandler(testHelper.getFileLocation(), testHelper.getDb(), Arrays.asList(F0001), msvRepository);
+        new MigrateHandler(testHelper.getFileLocation(), Arrays.asList(F0001), testHelper.getMsvRepository());
         validatorFiles.validateFileText(testHelper.getFileLocation(), "0001_test.js");
 
     }
@@ -115,7 +109,7 @@ public class ValidatorFilesTest {
     @Test
     public void validateFileTextSuccessJson() {
         testMSVRepository.clearMsvCollection();
-        new MigrateHandler(testHelper.getFileLocation(), testHelper.getDb(), Arrays.asList(F0002), msvRepository);
+        new MigrateHandler(testHelper.getFileLocation(), Arrays.asList(F0002), testHelper.getMsvRepository());
         validatorFiles.validateFileText(testHelper.getFileLocation(), "0002_test_test.json");
     }
 

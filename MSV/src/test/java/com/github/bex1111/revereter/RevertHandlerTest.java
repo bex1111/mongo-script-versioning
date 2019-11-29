@@ -23,7 +23,6 @@ public class RevertHandlerTest {
         testMSVRepository = new TestMSVRepository(testHelper.getDb());
     }
 
-    //TODO version, no version, empty coll,non exist version,
 
     @Test
     public void revertHandlerTestVersion() {

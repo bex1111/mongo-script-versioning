@@ -25,6 +25,10 @@ public class MSVExceptionFactory {
         return new MSVException("Cannot parse json file: " + fileName, e);
     }
 
+    public static MSVException jsonParseFail(String fileName) {
+        return new MSVException("Cannot parse json file: " + fileName);
+    }
+
     public static MSVException notUniqVersion() {
         return new MSVException("Not uniq file version");
     }
@@ -33,8 +37,8 @@ public class MSVExceptionFactory {
         return new MSVException("You wanna change file which had already imported! (" + fileName + ")");
     }
 
-    public static MSVException cannotReadFile(String filePath, IOException e) {
-        return new MSVException("Cannot read file. (Path: " + filePath + ")", e);
+    public static MSVException cannotReadFile(String fileName, IOException e) {
+        return new MSVException("Cannot read file. (Name: " + fileName + ")", e);
     }
 
     public static MSVException cannotWriteFile(String filePath, IOException e) {

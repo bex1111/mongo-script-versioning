@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.github.bex1111.util.Constans.JSONTYPE;
-import static com.github.bex1111.util.Constans.JSTYPE;
+import static com.github.bex1111.util.Constans.*;
 import static com.github.bex1111.util.FileHandler.getFileList;
 import static com.github.bex1111.util.Logger.log;
 import static java.util.stream.Collectors.toList;
@@ -54,11 +53,11 @@ public class FileReader {
         List<FileBaseDto> fileBaseDtos = new ArrayList<>();
         mergeTwoList(fileNames, msvRepository.migratedFileNameList()).forEach(x -> {
             if (x.contains(JSONTYPE)) {
-                String[] fileValues = x.replace(JSONTYPE, "").split("_");
+                String[] fileValues = x.replace(JSONTYPE, "").split(FILENAMESEPARATOR);
                 validatorFiles.validateFileText(fileLocation, x);
                 fileBaseDtos.add(validatorFiles.fileJsonValidator(fileValues, x));
             } else if (x.contains(JSTYPE)) {
-                String[] fileValues = x.replace(JSTYPE, "").split("_");
+                String[] fileValues = x.replace(JSTYPE, "").split(FILENAMESEPARATOR);
                 validatorFiles.validateFileText(fileLocation, x);
                 fileBaseDtos.add(validatorFiles.fileJsValidator(fileValues, x));
             } else {

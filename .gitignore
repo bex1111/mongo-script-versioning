@@ -18,6 +18,9 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+*.iml
 
 # own
 /tocsv/
+/bigjson/
+MSV/release.properties
